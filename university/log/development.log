@@ -3297,3 +3297,36 @@ Processing by StudentsController#index as HTML
 Completed 200 OK in 73ms (Views: 67.2ms | ActiveRecord: 0.6ms)
 
 
+Started GET "/students" for 127.0.0.1 at 2017-10-22 17:41:29 -0600
+Processing by StudentsController#index as HTML
+  Rendering students/index.html.erb within layouts/application
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students"[0m
+  Rendered students/index.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 47ms (Views: 43.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/students" for 127.0.0.1 at 2017-10-22 17:41:31 -0600
+Processing by StudentsController#index as HTML
+  Rendering students/index.html.erb within layouts/application
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students"[0m
+  Rendered students/index.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 81ms (Views: 77.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/admin_users" for 127.0.0.1 at 2017-10-22 17:41:32 -0600
+Processing by AdminUsersController#index as HTML
+  Rendering admin_users/index.html.erb within layouts/application
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "admin_users"[0m
+  [1m[36mAdminUser Load (0.4ms)[0m  [1m[34mSELECT "admin_users".* FROM "admin_users" ORDER BY last_name ASC, first_name ASC[0m
+  Rendered admin_users/index.html.erb within layouts/application (25.0ms)
+Completed 200 OK in 88ms (Views: 75.7ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/students" for 127.0.0.1 at 2017-10-22 17:41:33 -0600
+Processing by StudentsController#index as HTML
+  Rendering students/index.html.erb within layouts/application
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students"[0m
+  Rendered students/index.html.erb within layouts/application (1.5ms)
+Completed 200 OK in 55ms (Views: 53.2ms | ActiveRecord: 0.2ms)
+
+
