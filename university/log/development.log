@@ -3330,3 +3330,106 @@ Processing by StudentsController#index as HTML
 Completed 200 OK in 55ms (Views: 53.2ms | ActiveRecord: 0.2ms)
 
 
+Started GET "/students/new" for 127.0.0.1 at 2017-10-22 17:43:02 -0600
+Processing by StudentsController#new as HTML
+  Rendering students/new.html.erb within layouts/application
+  Rendered students/_form.html.erb (19.9ms)
+  Rendered students/new.html.erb within layouts/application (23.7ms)
+Completed 200 OK in 86ms (Views: 74.0ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/students" for 127.0.0.1 at 2017-10-22 17:43:23 -0600
+Processing by StudentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"rb4Ib5fpT+bNgiSo2eW2ZHvtJ5BOBdS2IjPN7pWCI1/VYTwALFF95tNhppepnZacnoXQmr7H7qtcWcFiJ7xmyw==", "student"=>{"first_name"=>"Andrew", "last_name"=>"Roberts", "student_id"=>"123456789", "credit_number"=>"120"}, "commit"=>"Create Student"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "students" ("first_name", "last_name", "student_id", "credit_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["first_name", "Andrew"], ["last_name", "Roberts"], ["student_id", 123456789], ["credit_number", 120], ["created_at", "2017-10-22 23:43:23.258784"], ["updated_at", "2017-10-22 23:43:23.258784"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/students/1
+Completed 302 Found in 5ms (ActiveRecord: 1.0ms)
+
+
+Started GET "/students/1" for 127.0.0.1 at 2017-10-22 17:43:23 -0600
+Processing by StudentsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT  "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering students/show.html.erb within layouts/application
+  Rendered students/show.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 49ms (Views: 42.5ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/students" for 127.0.0.1 at 2017-10-22 17:43:27 -0600
+Processing by StudentsController#index as HTML
+  Rendering students/index.html.erb within layouts/application
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students"[0m
+  Rendered students/index.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 54ms (Views: 51.8ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-22 17:44:57 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.5ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (67.0ms)
+Completed 200 OK in 129ms (Views: 117.2ms | ActiveRecord: 3.1ms)
+
+
+Started GET "/students" for 127.0.0.1 at 2017-10-22 17:45:01 -0600
+Processing by StudentsController#index as HTML
+  Rendering students/index.html.erb within layouts/application
+  [1m[36mStudent Load (0.3ms)[0m  [1m[34mSELECT "students".* FROM "students"[0m
+  Rendered students/index.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 59ms (Views: 55.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/admin_users" for 127.0.0.1 at 2017-10-22 17:45:08 -0600
+Processing by AdminUsersController#index as HTML
+  Rendering admin_users/index.html.erb within layouts/application
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "admin_users"[0m
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT "admin_users".* FROM "admin_users" ORDER BY last_name ASC, first_name ASC[0m
+  Rendered admin_users/index.html.erb within layouts/application (4.2ms)
+Completed 200 OK in 55ms (Views: 52.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-22 17:45:14 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (10.2ms)
+Completed 200 OK in 64ms (Views: 59.0ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-22 17:45:25 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 58ms (Views: 55.0ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-22 17:45:27 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 64ms (Views: 61.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/access/menu" for 127.0.0.1 at 2017-10-22 17:45:29 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 48ms (Views: 45.0ms | ActiveRecord: 0.0ms)
+
+
