@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :students
   root :to => 'access#menu'
 
   get 'access/menu'
