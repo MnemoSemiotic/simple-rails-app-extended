@@ -1,0 +1,2826 @@
+Started GET "/" for 127.0.0.1 at 2017-10-01 13:00:07 -0600
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate RAILS_ENV=development
+
+):
+  
+activerecord (5.1.4) lib/active_record/migration.rb:576:in `check_pending!'
+activerecord (5.1.4) lib/active_record/migration.rb:553:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `call'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateProfessors (20171001185808)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "professors" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171001185808"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateCourses (20171001185810)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "courses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "department" varchar, "hours" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171001185810"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateSections (20171001185812)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "sections" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "number" integer, "course_id" integer, "professor_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_20b1e5de46"
+FOREIGN KEY ("course_id")
+  REFERENCES "courses" ("id")
+, CONSTRAINT "fk_rails_e34faa07d4"
+FOREIGN KEY ("professor_id")
+  REFERENCES "professors" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_sections_on_course_id" ON "sections" ("course_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_sections_on_professor_id" ON "sections" ("professor_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171001185812"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-10-01 19:00:27.661092"], ["updated_at", "2017-10-01 19:00:27.661092"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+[0m
+Started GET "/" for 127.0.0.1 at 2017-10-01 13:00:39 -0600
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/tbot/.rvm/gems/ruby-2.2.6/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/tbot/.rvm/gems/ruby-2.2.6/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb (3.2ms)
+Completed 200 OK in 18ms (Views: 7.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 13:02:14 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 708ms (Views: 700.2ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/courses/new" for 127.0.0.1 at 2017-10-01 13:07:40 -0600
+Processing by CoursesController#new as HTML
+  Rendering courses/new.html.erb within layouts/application
+  Rendered courses/_form.html.erb (17.3ms)
+  Rendered courses/new.html.erb within layouts/application (20.1ms)
+Completed 200 OK in 55ms (Views: 43.7ms | ActiveRecord: 0.6ms)
+
+
+Started POST "/courses" for 127.0.0.1 at 2017-10-01 13:08:07 -0600
+Processing by CoursesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"iYx7xZcLl63+XQ+AuKI549YpeD+S4dwbv4npK2DNmoI+Ahrc7Ygam2qb3yQaFh6WF9uSqknTf0lqACldestW2w==", "course"=>{"name"=>"Underwater Basketweaving 1", "department"=>"Forensics", "hours"=>"2"}, "commit"=>"Create Course"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "courses" ("name", "department", "hours", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Underwater Basketweaving 1"], ["department", "Forensics"], ["hours", 2], ["created_at", "2017-10-01 19:08:07.220265"], ["updated_at", "2017-10-01 19:08:07.220265"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/courses/1
+Completed 302 Found in 6ms (ActiveRecord: 1.1ms)
+
+
+Started GET "/courses/1" for 127.0.0.1 at 2017-10-01 13:08:07 -0600
+Processing by CoursesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering courses/show.html.erb within layouts/application
+  Rendered courses/show.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 29ms (Views: 21.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 13:08:10 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 32ms (Views: 28.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses/new" for 127.0.0.1 at 2017-10-01 13:08:12 -0600
+Processing by CoursesController#new as HTML
+  Rendering courses/new.html.erb within layouts/application
+  Rendered courses/_form.html.erb (2.6ms)
+  Rendered courses/new.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 35ms (Views: 32.4ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/courses" for 127.0.0.1 at 2017-10-01 13:08:26 -0600
+Processing by CoursesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"vWA5jfpAPpRzUJdG9KrgIukqcieDNuE6yJ9NubasGYkK7liUgMOzoueWR+JWHsdXKNiYslgEQmgdFo3PrKrV0A==", "course"=>{"name"=>"Underwater Basketweaving 2", "department"=>"Forensics", "hours"=>"3"}, "commit"=>"Create Course"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "courses" ("name", "department", "hours", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Underwater Basketweaving 2"], ["department", "Forensics"], ["hours", 3], ["created_at", "2017-10-01 19:08:26.214785"], ["updated_at", "2017-10-01 19:08:26.214785"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/courses/2
+Completed 302 Found in 4ms (ActiveRecord: 1.1ms)
+
+
+Started GET "/courses/2" for 127.0.0.1 at 2017-10-01 13:08:26 -0600
+Processing by CoursesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering courses/show.html.erb within layouts/application
+  Rendered courses/show.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 53ms (Views: 50.8ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 13:08:27 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 40ms (Views: 37.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses/new" for 127.0.0.1 at 2017-10-01 13:08:29 -0600
+Processing by CoursesController#new as HTML
+  Rendering courses/new.html.erb within layouts/application
+  Rendered courses/_form.html.erb (4.6ms)
+  Rendered courses/new.html.erb within layouts/application (7.0ms)
+Completed 200 OK in 42ms (Views: 38.2ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/courses" for 127.0.0.1 at 2017-10-01 13:08:44 -0600
+Processing by CoursesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VmuErGP1IfsaXY+fvOScoHqzWhOMZuonv//ZUwaFvETh5eW1GXaszY6bXzseULvVu0GwhldUSXVqdhklHINwHQ==", "course"=>{"name"=>"Fishing for Vegans", "department"=>"Sports and Fitness", "hours"=>"4"}, "commit"=>"Create Course"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "courses" ("name", "department", "hours", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Fishing for Vegans"], ["department", "Sports and Fitness"], ["hours", 4], ["created_at", "2017-10-01 19:08:44.487667"], ["updated_at", "2017-10-01 19:08:44.487667"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/courses/3
+Completed 302 Found in 5ms (ActiveRecord: 1.0ms)
+
+
+Started GET "/courses/3" for 127.0.0.1 at 2017-10-01 13:08:44 -0600
+Processing by CoursesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering courses/show.html.erb within layouts/application
+  Rendered courses/show.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 41ms (Views: 38.5ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 13:08:46 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.4ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (4.3ms)
+Completed 200 OK in 46ms (Views: 42.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-01 13:12:32 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 34ms (Views: 28.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-01 13:13:39 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 33ms (Views: 26.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/professors/new" for 127.0.0.1 at 2017-10-01 13:19:05 -0600
+Processing by ProfessorsController#new as HTML
+  Rendering professors/new.html.erb within layouts/application
+  Rendered professors/_form.html.erb (2.8ms)
+  Rendered professors/new.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 38ms (Views: 28.5ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/professors" for 127.0.0.1 at 2017-10-01 13:19:23 -0600
+Processing by ProfessorsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"JkKbFCptXKusgPt5G4THE+gbObHWIvcpbPrt9xfINIKJAiwRElk39tXfSZdvITwN3pfZXrElSLzBRBtMiDqU4g==", "professor"=>{"name"=>"Dr Billius Ravenschaeffer"}, "commit"=>"Create Professor"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "professors" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Dr Billius Ravenschaeffer"], ["created_at", "2017-10-01 19:19:23.270049"], ["updated_at", "2017-10-01 19:19:23.270049"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/professors/1
+Completed 302 Found in 4ms (ActiveRecord: 1.0ms)
+
+
+Started GET "/professors/1" for 127.0.0.1 at 2017-10-01 13:19:23 -0600
+Processing by ProfessorsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering professors/show.html.erb within layouts/application
+  Rendered professors/show.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 26ms (Views: 22.6ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-01 13:19:26 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (1.7ms)
+Completed 200 OK in 32ms (Views: 28.4ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/professors/new" for 127.0.0.1 at 2017-10-01 13:19:27 -0600
+Processing by ProfessorsController#new as HTML
+  Rendering professors/new.html.erb within layouts/application
+  Rendered professors/_form.html.erb (2.2ms)
+  Rendered professors/new.html.erb within layouts/application (4.1ms)
+Completed 200 OK in 33ms (Views: 30.2ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/professors" for 127.0.0.1 at 2017-10-01 13:19:40 -0600
+Processing by ProfessorsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"kdgVLZ+X7Vq0xT8zBLkMRHcpQMPBowhrmOGlamltRQI+mKIop6OGB82ajd1wHPdaQaWgLKakt/41X1PR9p/lYg==", "professor"=>{"name"=>"Master P "}, "commit"=>"Create Professor"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "professors" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Master P "], ["created_at", "2017-10-01 19:19:40.250017"], ["updated_at", "2017-10-01 19:19:40.250017"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/professors/2
+Completed 302 Found in 4ms (ActiveRecord: 1.1ms)
+
+
+Started GET "/professors/2" for 127.0.0.1 at 2017-10-01 13:19:40 -0600
+Processing by ProfessorsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering professors/show.html.erb within layouts/application
+  Rendered professors/show.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 25ms (Views: 22.6ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-01 13:19:42 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 33ms (Views: 30.4ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/professors/new" for 127.0.0.1 at 2017-10-01 13:19:43 -0600
+Processing by ProfessorsController#new as HTML
+  Rendering professors/new.html.erb within layouts/application
+  Rendered professors/_form.html.erb (2.2ms)
+  Rendered professors/new.html.erb within layouts/application (4.3ms)
+Completed 200 OK in 35ms (Views: 31.9ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/professors" for 127.0.0.1 at 2017-10-01 13:19:53 -0600
+Processing by ProfessorsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"gb7tDfMifzx594lNzLJg+NlYTxRVVIFOg+5tZE94do0u/loIyxYUYQCoO6O4F5vm79Sv+zJTPtsuUJvf0IrW7Q==", "professor"=>{"name"=>"Pierogi von DiffelDorfer"}, "commit"=>"Create Professor"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "professors" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Pierogi von DiffelDorfer"], ["created_at", "2017-10-01 19:19:53.681572"], ["updated_at", "2017-10-01 19:19:53.681572"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/professors/3
+Completed 302 Found in 4ms (ActiveRecord: 0.9ms)
+
+
+Started GET "/professors/3" for 127.0.0.1 at 2017-10-01 13:19:53 -0600
+Processing by ProfessorsController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering professors/show.html.erb within layouts/application
+  Rendered professors/show.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 26ms (Views: 23.2ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-01 13:29:19 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 40ms (Views: 36.7ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 13:29:25 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.1ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  Rendered sections/index.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 31ms (Views: 22.7ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 13:29:27 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  Rendered sections/_form.html.erb (4.4ms)
+  Rendered sections/new.html.erb within layouts/application (7.4ms)
+Completed 200 OK in 40ms (Views: 30.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 13:31:59 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  Rendered sections/_form.html.erb (6.6ms)
+  Rendered sections/new.html.erb within layouts/application (9.0ms)
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for :course_id:Symbol):
+    18: 
+    19:   <div class="field">
+    20:     <%= form.label :course_id %>
+    21:     <%= form.select(:course_id, options_from_collection_for_select(:course_id, :id, :name)) %>
+    22:     <!-- <%= form.text_field :course_id, id: :section_course_id %> -->
+    23:   </div>
+    24: 
+  
+app/views/sections/_form.html.erb:21:in `block in _app_views_sections__form_html_erb__2398097023580950909_70125765421040'
+app/views/sections/_form.html.erb:1:in `_app_views_sections__form_html_erb__2398097023580950909_70125765421040'
+app/views/sections/new.html.erb:3:in `_app_views_sections_new_html_erb___80214965916262537_70125752840560'
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 13:32:21 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  Rendered sections/_form.html.erb (2.3ms)
+  Rendered sections/new.html.erb within layouts/application (4.2ms)
+Completed 200 OK in 26ms (Views: 24.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 13:36:46 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  Rendered sections/_form.html.erb (3.8ms)
+  Rendered sections/new.html.erb within layouts/application (6.3ms)
+Completed 500 Internal Server Error in 13ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for nil:NilClass):
+    18: 
+    19:   <div class="field">
+    20:     <%= form.label :course_id %>
+    21:     <%= form.select(@courses, options_from_collection_for_select(@courses, :id, :name)) %>
+    22:   </div>
+    23: 
+    24:   <div class="field">
+  
+app/views/sections/_form.html.erb:21:in `block in _app_views_sections__form_html_erb__2398097023580950909_70125709128480'
+app/views/sections/_form.html.erb:1:in `_app_views_sections__form_html_erb__2398097023580950909_70125709128480'
+app/views/sections/new.html.erb:3:in `_app_views_sections_new_html_erb___80214965916262537_70125709173860'
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 13:38:52 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  Rendered sections/_form.html.erb (3.4ms)
+  Rendered sections/new.html.erb within layouts/application (5.6ms)
+Completed 500 Internal Server Error in 12ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for nil:NilClass):
+    18: 
+    19:   <div class="field">
+    20:     <%= form.label :course_id %>
+    21:     <%= form.select(:course_id, options_from_collection_for_select(@courses, :id, :name)) %>
+    22:   </div>
+    23: 
+    24:   <div class="field">
+  
+app/views/sections/_form.html.erb:21:in `block in _app_views_sections__form_html_erb__2398097023580950909_70125688573220'
+app/views/sections/_form.html.erb:1:in `_app_views_sections__form_html_erb__2398097023580950909_70125688573220'
+app/views/sections/new.html.erb:3:in `_app_views_sections_new_html_erb___80214965916262537_70125717985700'
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 13:40:22 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  Rendered sections/_form.html.erb (3.3ms)
+  Rendered sections/new.html.erb within layouts/application (5.2ms)
+Completed 500 Internal Server Error in 13ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for :course_id:Symbol):
+    18: 
+    19:   <div class="field">
+    20:     <%= form.label :course_id %>
+    21:     <%= form.select(:course_id, options_from_collection_for_select(:course_id, :id, :name)) %>
+    22:   </div>
+    23: 
+    24:   <div class="field">
+  
+app/views/sections/_form.html.erb:21:in `block in _app_views_sections__form_html_erb__2398097023580950909_70125687477000'
+app/views/sections/_form.html.erb:1:in `_app_views_sections__form_html_erb__2398097023580950909_70125687477000'
+app/views/sections/new.html.erb:3:in `_app_views_sections_new_html_erb___80214965916262537_70125687587460'
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 13:42:51 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  Rendered sections/_form.html.erb (5.1ms)
+  Rendered sections/new.html.erb within layouts/application (7.0ms)
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined method `empty?' for nil:NilClass):
+    18: 
+    19:   <div class="field">
+    20:     <%= form.label :course_id %>
+    21:     <%= form.select(:course_id) %>
+    22:   </div>
+    23: 
+    24:   <div class="field">
+  
+app/views/sections/_form.html.erb:21:in `block in _app_views_sections__form_html_erb__2398097023580950909_70125703261160'
+app/views/sections/_form.html.erb:1:in `_app_views_sections__form_html_erb__2398097023580950909_70125703261160'
+app/views/sections/new.html.erb:3:in `_app_views_sections_new_html_erb___80214965916262537_70125703477500'
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 13:52:17 -0600
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  Rendered sections/_form.html.erb (96.7ms)
+  Rendered sections/new.html.erb within layouts/application (99.5ms)
+Completed 500 Internal Server Error in 128ms (ActiveRecord: 0.5ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `course_id' for #<#<Class:0x007ff70d6d88d0>:0x007ff70d6bb460>):
+    18: 
+    19:   <div class="field">
+    20:     <%= form.label :course_id %>
+    21:     <%= form.select(:section_course_id, options_from_collection_for_select(course_id, :id, :name)) %>
+    22:   </div>
+    23: 
+    24:   <div class="field">
+  
+app/views/sections/_form.html.erb:21:in `block in _app_views_sections__form_html_erb___3173497148120633224_70349529219180'
+app/views/sections/_form.html.erb:1:in `_app_views_sections__form_html_erb___3173497148120633224_70349529219180'
+app/views/sections/new.html.erb:3:in `_app_views_sections_new_html_erb___3540369473090357621_70349529467480'
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 13:52:34 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  Rendered sections/_form.html.erb (3.7ms)
+  Rendered sections/new.html.erb within layouts/application (5.6ms)
+Completed 500 Internal Server Error in 13ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for :course_id:Symbol):
+    18: 
+    19:   <div class="field">
+    20:     <%= form.label :course_id %>
+    21:     <%= form.select(:section_course_id, options_from_collection_for_select(:course_id, :id, :name)) %>
+    22:   </div>
+    23: 
+    24:   <div class="field">
+  
+app/views/sections/_form.html.erb:21:in `block in _app_views_sections__form_html_erb___3173497148120633224_70349491045020'
+app/views/sections/_form.html.erb:1:in `_app_views_sections__form_html_erb___3173497148120633224_70349491045020'
+app/views/sections/new.html.erb:3:in `_app_views_sections_new_html_erb___3540369473090357621_70349491177240'
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 14:02:08 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered sections/_form.html.erb (20.6ms)
+  Rendered sections/new.html.erb within layouts/application (22.6ms)
+Completed 200 OK in 221ms (Views: 218.5ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 14:10:12 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered sections/_form.html.erb (10.6ms)
+  Rendered sections/new.html.erb within layouts/application (12.4ms)
+Completed 200 OK in 33ms (Views: 30.0ms | ActiveRecord: 0.7ms)
+
+
+Started POST "/sections" for 127.0.0.1 at 2017-10-01 14:11:10 -0600
+Processing by SectionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"zw5KxaXZUh1iWLgKDIKbyrLCQ0l8CyCQ6PireYLaYP62lUgibflx7C1fpKvrwbXdrySj0QmRmDnhPdJqg4DQhg==", "section"=>{"number"=>"1", "course_id"=>"1", "professor_id"=>"1"}, "commit"=>"Create Section"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "sections" ("number", "course_id", "professor_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["number", 1], ["course_id", 1], ["professor_id", 1], ["created_at", "2017-10-01 20:11:10.707575"], ["updated_at", "2017-10-01 20:11:10.707575"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/sections/1
+Completed 302 Found in 17ms (ActiveRecord: 1.4ms)
+
+
+Started GET "/sections/1" for 127.0.0.1 at 2017-10-01 14:11:10 -0600
+Processing by SectionsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT  "sections".* FROM "sections" WHERE "sections"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering sections/show.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/show.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 26ms (Views: 22.4ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:11:13 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (3.7ms)
+Completed 200 OK in 32ms (Views: 27.2ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 14:11:14 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered sections/_form.html.erb (5.4ms)
+  Rendered sections/new.html.erb within layouts/application (8.0ms)
+Completed 200 OK in 37ms (Views: 33.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:11:15 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.3ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (3.9ms)
+Completed 200 OK in 60ms (Views: 56.9ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/sections/1" for 127.0.0.1 at 2017-10-01 14:13:49 -0600
+Processing by SectionsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT  "sections".* FROM "sections" WHERE "sections"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering sections/show.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/show.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 37ms (Views: 33.2ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:14:50 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.1ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  Rendered sections/index.html.erb within layouts/application (3.1ms)
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 0.1ms)
+
+
+  
+ActionView::Template::Error (undefined method `number' for nil:NilClass):
+    15:   <tbody>
+    16:     <% @sections.each do |section| %>
+    17:       <tr>
+    18:         <td><%= @section.number %></td>
+    19:         <td><%= section.course %></td>
+    20:         <td><%= section.professor %></td>
+    21:         <td><%= link_to 'Show', section %></td>
+  
+app/views/sections/index.html.erb:18:in `block in _app_views_sections_index_html_erb___1471056206474336270_70349544636800'
+app/views/sections/index.html.erb:16:in `_app_views_sections_index_html_erb___1471056206474336270_70349544636800'
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:15:35 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (4.1ms)
+Completed 200 OK in 32ms (Views: 30.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/sections/1" for 127.0.0.1 at 2017-10-01 14:15:38 -0600
+Processing by SectionsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT  "sections".* FROM "sections" WHERE "sections"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering sections/show.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/show.html.erb within layouts/application (3.8ms)
+Completed 200 OK in 39ms (Views: 34.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:15:40 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.3ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (5.9ms)
+Completed 200 OK in 38ms (Views: 34.3ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:16:02 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (3.4ms)
+Completed 200 OK in 24ms (Views: 21.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 14:16:47 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  [1m[36mCourse Load (0.3ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered sections/_form.html.erb (5.0ms)
+  Rendered sections/new.html.erb within layouts/application (7.3ms)
+Completed 200 OK in 35ms (Views: 30.8ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/sections" for 127.0.0.1 at 2017-10-01 14:16:55 -0600
+Processing by SectionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"M0by1wOKC6eGzgmCj5AFRtX/8sQ8jItUP5DxtCBgMLhOOpMLof9vyBwG6lsV3Gd29MMDbBhIPVjsH01KUzPEyA==", "section"=>{"number"=>"2", "course_id"=>"2", "professor_id"=>"2"}, "commit"=>"Create Section"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "sections" ("number", "course_id", "professor_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["number", 2], ["course_id", 2], ["professor_id", 2], ["created_at", "2017-10-01 20:16:55.750451"], ["updated_at", "2017-10-01 20:16:55.750451"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/sections/2
+Completed 302 Found in 6ms (ActiveRecord: 1.1ms)
+
+
+Started GET "/sections/2" for 127.0.0.1 at 2017-10-01 14:16:55 -0600
+Processing by SectionsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mSection Load (0.1ms)[0m  [1m[34mSELECT  "sections".* FROM "sections" WHERE "sections"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering sections/show.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered sections/show.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 29ms (Views: 25.6ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:16:57 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (8.4ms)
+Completed 200 OK in 41ms (Views: 36.8ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 14:16:59 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered sections/_form.html.erb (4.6ms)
+  Rendered sections/new.html.erb within layouts/application (7.1ms)
+Completed 200 OK in 41ms (Views: 37.7ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/sections" for 127.0.0.1 at 2017-10-01 14:17:09 -0600
+Processing by SectionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"tSrEZ2RWU/WBsebkDHFTyQ4rbST5cBCUROWPSApnr/LIVqW7xiM3mht5BT2WPTH5LxecjN20ppiXajO2eTRbgg==", "section"=>{"number"=>"3", "course_id"=>"3", "professor_id"=>"3"}, "commit"=>"Create Section"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sections" ("number", "course_id", "professor_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["number", 3], ["course_id", 3], ["professor_id", 3], ["created_at", "2017-10-01 20:17:09.591608"], ["updated_at", "2017-10-01 20:17:09.591608"]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/sections/3
+Completed 302 Found in 8ms (ActiveRecord: 2.9ms)
+
+
+Started GET "/sections/3" for 127.0.0.1 at 2017-10-01 14:17:09 -0600
+Processing by SectionsController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mSection Load (0.1ms)[0m  [1m[34mSELECT  "sections".* FROM "sections" WHERE "sections"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering sections/show.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/show.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 28ms (Views: 24.9ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:17:11 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.3ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (7.8ms)
+Completed 200 OK in 39ms (Views: 35.5ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 14:35:56 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (12.5ms)
+Completed 200 OK in 43ms (Views: 36.2ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 14:38:29 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (10.4ms)
+Completed 200 OK in 39ms (Views: 33.1ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 14:44:53 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (9.6ms)
+Completed 200 OK in 36ms (Views: 29.6ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/courses/new" for 127.0.0.1 at 2017-10-01 14:44:55 -0600
+Processing by CoursesController#new as HTML
+  Rendering courses/new.html.erb within layouts/application
+  Rendered courses/_form.html.erb (2.8ms)
+  Rendered courses/new.html.erb within layouts/application (5.5ms)
+Completed 200 OK in 33ms (Views: 28.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/courses" for 127.0.0.1 at 2017-10-01 14:44:58 -0600
+Processing by CoursesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"4mtagc9L77XKGO+NXymrFLMrdF25l5GYja5EPthYD1dV5TuYtchig17ePyn9nYxhctmeyGKlMspYJ4RIwl7DDg==", "course"=>{"name"=>"", "department"=>"", "hours"=>""}, "commit"=>"Create Course"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "courses" WHERE "courses"."name" = ? LIMIT ?[0m  [["name", ""], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  Rendering courses/new.html.erb within layouts/application
+  Rendered courses/_form.html.erb (3.3ms)
+  Rendered courses/new.html.erb within layouts/application (5.1ms)
+Completed 200 OK in 42ms (Views: 32.6ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/courses" for 127.0.0.1 at 2017-10-01 14:45:03 -0600
+Processing by CoursesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Nf69Dm9ymUwTnOocYOXfcb+XLZW2dZOR1207tinDkKhMZb/pp1K6vVyb9r2HpvFmonHNDcPvKzjeqEKlKJkg0A==", "course"=>{"name"=>"", "department"=>"", "hours"=>""}, "commit"=>"Create Course"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "courses" WHERE "courses"."name" = ? LIMIT ?[0m  [["name", ""], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  Rendering courses/new.html.erb within layouts/application
+  Rendered courses/_form.html.erb (3.0ms)
+  Rendered courses/new.html.erb within layouts/application (4.8ms)
+Completed 200 OK in 29ms (Views: 25.5ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:45:36 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (22.5ms)
+Completed 200 OK in 47ms (Views: 40.1ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 14:45:38 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered sections/_form.html.erb (5.6ms)
+  Rendered sections/new.html.erb within layouts/application (7.8ms)
+Completed 200 OK in 35ms (Views: 31.9ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/sections" for 127.0.0.1 at 2017-10-01 14:45:54 -0600
+Processing by SectionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"ylpFVsl6MitE/mksIjmaDQ1wgKcR68nxCTPuCrbK2mW3JiSKaw9WRN42ivW4dfg9LExxDzUvf/3avFL0xZkuFQ==", "section"=>{"number"=>"", "course_id"=>"1", "professor_id"=>"1"}, "commit"=>"Create Section"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sections" ("course_id", "professor_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["course_id", 1], ["professor_id", 1], ["created_at", "2017-10-01 20:45:54.540593"], ["updated_at", "2017-10-01 20:45:54.540593"]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/sections/4
+Completed 302 Found in 8ms (ActiveRecord: 2.8ms)
+
+
+Started GET "/sections/4" for 127.0.0.1 at 2017-10-01 14:45:54 -0600
+Processing by SectionsController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT  "sections".* FROM "sections" WHERE "sections"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering sections/show.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/show.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 28ms (Views: 24.1ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:45:57 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.4ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCACHE Course Load (0.0ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE Professor Load (0.0ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (11.6ms)
+Completed 200 OK in 36ms (Views: 32.8ms | ActiveRecord: 1.0ms)
+
+
+Started DELETE "/sections/4" for 127.0.0.1 at 2017-10-01 14:46:03 -0600
+Processing by SectionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"L4W2ypvJpG8JgxlfP9D1YpvypSD6f8/R5kj0qATejlJWHrQtU+mHnkaEBf7Yk9t1hhRFuI/ld3jvjY27BYQ+Kg==", "id"=>"4"}
+  [1m[36mSection Load (0.1ms)[0m  [1m[34mSELECT  "sections".* FROM "sections" WHERE "sections"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "sections" WHERE "sections"."id" = ?[0m  [["id", 4]]
+  [1m[35m (2.5ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/sections
+Completed 302 Found in 6ms (ActiveRecord: 3.0ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:46:03 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (9.6ms)
+Completed 200 OK in 34ms (Views: 30.3ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:46:49 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.1ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (43.9ms)
+Completed 200 OK in 70ms (Views: 64.7ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 14:46:51 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered sections/_form.html.erb (5.5ms)
+  Rendered sections/new.html.erb within layouts/application (8.0ms)
+Completed 200 OK in 36ms (Views: 31.6ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/sections" for 127.0.0.1 at 2017-10-01 14:46:54 -0600
+Processing by SectionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"XxFp+3a5VF+tkn7yKQLHKxt01rdmp21gcedfng6uq58ibQgn1MwwMDdanSuzTqUbOkgnH0Jj22yiaONgff1f7w==", "section"=>{"number"=>"", "course_id"=>"1", "professor_id"=>"1"}, "commit"=>"Create Section"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSection Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "sections" WHERE "sections"."number" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  Rendering sections/new.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered sections/_form.html.erb (4.5ms)
+  Rendered sections/new.html.erb within layouts/application (6.4ms)
+Completed 200 OK in 33ms (Views: 25.4ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-01 14:47:09 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 26ms (Views: 23.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/professors/new" for 127.0.0.1 at 2017-10-01 14:47:10 -0600
+Processing by ProfessorsController#new as HTML
+  Rendering professors/new.html.erb within layouts/application
+  Rendered professors/_form.html.erb (1.9ms)
+  Rendered professors/new.html.erb within layouts/application (4.3ms)
+Completed 200 OK in 33ms (Views: 28.7ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/professors" for 127.0.0.1 at 2017-10-01 14:47:12 -0600
+Processing by ProfessorsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"8Jffuch1N+AG/IupW5jqV6CDaNMxOc+2e5IhJLKlyTVf12i88EFcvX+jOUcvPRFJlg+IPFY+cCPWLNefLVdpVQ==", "professor"=>{"name"=>""}, "commit"=>"Create Professor"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mProfessor Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "professors" WHERE "professors"."name" = ? LIMIT ?[0m  [["name", ""], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  Rendering professors/new.html.erb within layouts/application
+  Rendered professors/_form.html.erb (1.9ms)
+  Rendered professors/new.html.erb within layouts/application (3.7ms)
+Completed 200 OK in 29ms (Views: 24.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:49:50 -0600
+Processing by SectionsController#index as HTML
+Completed 500 Internal Server Error in 3ms
+
+
+  
+ArgumentError (:attributes cannot be blank):
+  
+app/models/section.rb:6:in `<class:Section>'
+app/models/section.rb:1:in `<top (required)>'
+app/controllers/sections_controller.rb:7:in `index'
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:50:44 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (32.2ms)
+Completed 200 OK in 57ms (Views: 52.0ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-01 14:50:47 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered sections/_form.html.erb (5.4ms)
+  Rendered sections/new.html.erb within layouts/application (7.6ms)
+Completed 200 OK in 35ms (Views: 31.1ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/sections" for 127.0.0.1 at 2017-10-01 14:50:53 -0600
+Processing by SectionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"m/O2OsljwqRr0LfQGHo+IZchyesmIbJX8D/rfTMuRjrmj9fmaxamy/EYVAmCNlwRth04QwLlBFsjsFeDQH2ySg==", "section"=>{"number"=>"1", "course_id"=>"1", "professor_id"=>"1"}, "commit"=>"Create Section"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSection Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "sections" WHERE "sections"."number" = ? AND "sections"."course_id" = ? LIMIT ?[0m  [["number", 1], ["course_id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  Rendering sections/new.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered sections/_form.html.erb (3.9ms)
+  Rendered sections/new.html.erb within layouts/application (5.7ms)
+Completed 200 OK in 33ms (Views: 25.1ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 14:54:15 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (8.0ms)
+Completed 200 OK in 43ms (Views: 40.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/sections/1" for 127.0.0.1 at 2017-10-01 14:54:20 -0600
+Processing by SectionsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT  "sections".* FROM "sections" WHERE "sections"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering sections/show.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/show.html.erb within layouts/application (3.3ms)
+Completed 200 OK in 31ms (Views: 26.0ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-01 14:54:28 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 25ms (Views: 22.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/professors/1" for 127.0.0.1 at 2017-10-01 14:54:30 -0600
+Processing by ProfessorsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering professors/show.html.erb within layouts/application
+  Rendered professors/show.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 32ms (Views: 26.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 15:00:51 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 27ms (Views: 24.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 15:01:16 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 26ms (Views: 23.3ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 15:02:55 -0600
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (12.7ms)
+Completed 200 OK in 302ms (Views: 286.4ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 15:03:08 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (3.4ms)
+Completed 200 OK in 24ms (Views: 21.6ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 15:05:04 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 23ms (Views: 20.5ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 15:06:31 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  Rendered courses/index.html.erb within layouts/application (1.0ms)
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/Users/tbot/Dropbox/cs390P/workspace/cs390P-assign02/university/app/views/courses/index.html.erb:4: syntax error, unexpected keyword_do_block
+'.freeze; form_tag courses_path, :method => do 
+                                              ^
+/Users/tbot/Dropbox/cs390P/workspace/cs390P-assign02/university/app/views/courses/index.html.erb:40: syntax error, unexpected keyword_ensure, expecting end-of-input):
+  
+app/views/courses/index.html.erb:4: syntax error, unexpected keyword_do_block
+app/views/courses/index.html.erb:40: syntax error, unexpected keyword_ensure, expecting end-of-input
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 15:07:10 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (3.4ms)
+Completed 200 OK in 28ms (Views: 25.0ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 15:12:48 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (2.4ms)
+Completed 500 Internal Server Error in 193ms (ActiveRecord: 0.2ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `recipes_path' for #<#<Class:0x007f8653c0d5b0>:0x007f8650653910>):
+    10: 
+    11:   <body>
+    12: 
+    13:     <%= form_tag(recipes_path, :method => "get", id: "search-form") do %>
+    14:         <%= text_field_tag :search, params[:search], placeholder: "Search Recipes" %>
+    15:         <%= submit_tag "Search", :name => nil %>
+    16:     <% end %>
+  
+app/views/layouts/application.html.erb:13:in `_app_views_layouts_application_html_erb__1759801630732804673_70107425512180'
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 15:13:38 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (2.1ms)
+Completed 500 Internal Server Error in 119ms (ActiveRecord: 0.1ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `recipes_path' for #<#<Class:0x007f8653c0d5b0>:0x007f8650fd0d30>):
+    10: 
+    11:   <body>
+    12: 
+    13:     <%= form_tag(recipes_path, :method => "get", id: "search-form") do %>
+    14:         <%= text_field_tag :search, params[:search], placeholder: "Search Recipes" %>
+    15:         <%= submit_tag "Search", :name => nil %>
+    16:     <% end %>
+  
+app/views/layouts/application.html.erb:13:in `_app_views_layouts_application_html_erb__1759801630732804673_70107425786600'
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 15:13:55 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 25ms (Views: 22.1ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/courses?utf8=%E2%9C%93&search=underwater" for 127.0.0.1 at 2017-10-01 15:13:59 -0600
+Processing by CoursesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"underwater"}
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 22ms (Views: 20.2ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/courses?utf8=%E2%9C%93&search=Underwater" for 127.0.0.1 at 2017-10-01 15:14:04 -0600
+Processing by CoursesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Underwater"}
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 24ms (Views: 22.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses?utf8=%E2%9C%93&search=Underwater" for 127.0.0.1 at 2017-10-01 15:24:37 -0600
+Processing by CoursesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Underwater"}
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE (name LIKE '%Underwater%' OR department LIKE '%Underwater%') ORDER BY created_at DESC[0m
+  Rendered courses/index.html.erb within layouts/application (8.0ms)
+Completed 200 OK in 43ms (Views: 36.1ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/courses?utf8=%E2%9C%93&search=" for 127.0.0.1 at 2017-10-01 15:24:45 -0600
+Processing by CoursesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>""}
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE (name LIKE '%%' OR department LIKE '%%') ORDER BY created_at DESC[0m
+  Rendered courses/index.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 25ms (Views: 22.3ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses?utf8=%E2%9C%93&search=" for 127.0.0.1 at 2017-10-01 15:26:44 -0600
+Processing by CoursesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>""}
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE (name LIKE '%%' OR department LIKE '%%') ORDER BY created_at DESC[0m
+  Rendered courses/index.html.erb within layouts/application (8.6ms)
+Completed 200 OK in 36ms (Views: 29.1ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/courses?utf8=%E2%9C%93&search=fishing" for 127.0.0.1 at 2017-10-01 15:26:48 -0600
+Processing by CoursesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"fishing"}
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE (name LIKE '%fishing%' OR department LIKE '%fishing%') ORDER BY created_at DESC[0m
+  Rendered courses/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 25ms (Views: 22.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses?utf8=%E2%9C%93&search=underwater" for 127.0.0.1 at 2017-10-01 15:26:55 -0600
+Processing by CoursesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"underwater"}
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE (name LIKE '%underwater%' OR department LIKE '%underwater%') ORDER BY created_at DESC[0m
+  Rendered courses/index.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 25ms (Views: 22.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses?utf8=%E2%9C%93&search=hey" for 127.0.0.1 at 2017-10-01 15:27:11 -0600
+Processing by CoursesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"hey"}
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE (name LIKE '%hey%' OR department LIKE '%hey%') ORDER BY created_at DESC[0m
+  Rendered courses/index.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 25ms (Views: 22.6ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses?utf8=%E2%9C%93&search=" for 127.0.0.1 at 2017-10-01 15:27:19 -0600
+Processing by CoursesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>""}
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE (name LIKE '%%' OR department LIKE '%%') ORDER BY created_at DESC[0m
+  Rendered courses/index.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 24ms (Views: 21.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses?utf8=%E2%9C%93&search=fishing" for 127.0.0.1 at 2017-10-01 15:27:46 -0600
+Processing by CoursesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"fishing"}
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE (name LIKE '%fishing%' OR department LIKE '%fishing%') ORDER BY created_at DESC[0m
+  Rendered courses/index.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 22ms (Views: 19.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses?utf8=%E2%9C%93&search=lipsyncing" for 127.0.0.1 at 2017-10-01 15:28:05 -0600
+Processing by CoursesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"lipsyncing"}
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE (name LIKE '%lipsyncing%' OR department LIKE '%lipsyncing%') ORDER BY created_at DESC[0m
+  Rendered courses/index.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 31ms (Views: 28.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses?utf8=%E2%9C%93&search=lipsyncing" for 127.0.0.1 at 2017-10-01 15:28:09 -0600
+Processing by CoursesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"lipsyncing"}
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE (name LIKE '%lipsyncing%' OR department LIKE '%lipsyncing%') ORDER BY created_at DESC[0m
+  Rendered courses/index.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 27ms (Views: 24.3ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-01 15:33:31 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (8.2ms)
+Completed 200 OK in 34ms (Views: 28.5ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/professors?utf8=%E2%9C%93&search=Bill" for 127.0.0.1 at 2017-10-01 15:33:51 -0600
+Processing by ProfessorsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Bill"}
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.5ms)[0m  [1m[34mSELECT "professors".* FROM "professors" WHERE (name LIKE ?,%Bill%)[0m
+  Rendered professors/index.html.erb within layouts/application (3.8ms)
+Completed 500 Internal Server Error in 11ms (ActiveRecord: 0.5ms)
+
+
+  
+ActionView::Template::Error (SQLite3::SQLException: near "%": syntax error: SELECT "professors".* FROM "professors" WHERE (name LIKE ?,%Bill%)):
+     7:     <%= submit_tag "Search", :name => nil %>
+     8: <% end %>
+     9: 
+    10: <% if @professors.blank? %>
+    11:   <h4>There are no professors with names containing the characters <%= params[:search] %>.</h4>
+    12: <% end %>
+    13: 
+  
+app/views/professors/index.html.erb:10:in `_app_views_professors_index_html_erb___3722199903380586040_70107485225600'
+Started GET "/professors?utf8=%E2%9C%93&search=Bill" for 127.0.0.1 at 2017-10-01 15:35:01 -0600
+Processing by ProfessorsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Bill"}
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.5ms)[0m  [1m[34mSELECT "professors".* FROM "professors" WHERE (name LIKE ?,%Bill%)[0m
+  Rendered professors/index.html.erb within layouts/application (4.3ms)
+Completed 500 Internal Server Error in 12ms (ActiveRecord: 0.5ms)
+
+
+  
+ActionView::Template::Error (SQLite3::SQLException: near "%": syntax error: SELECT "professors".* FROM "professors" WHERE (name LIKE ?,%Bill%)):
+     7:     <%= submit_tag "Search", :name => nil %>
+     8: <% end %>
+     9: 
+    10: <% if @professors.blank? %>
+    11:   <h4>There are no professors with names containing the characters <%= params[:search] %>.</h4>
+    12: <% end %>
+    13: 
+  
+app/views/professors/index.html.erb:10:in `_app_views_professors_index_html_erb___3722199903380586040_70107476823480'
+Started GET "/professors?utf8=%E2%9C%93&search=Bill" for 127.0.0.1 at 2017-10-01 15:35:35 -0600
+Processing by ProfessorsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Bill"}
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.5ms)[0m  [1m[34mSELECT "professors".* FROM "professors" WHERE (name LIKE ?,%Bill%) ORDER BY created_at DESC[0m
+  Rendered professors/index.html.erb within layouts/application (4.5ms)
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 0.7ms)
+
+
+  
+ActionView::Template::Error (SQLite3::SQLException: near "%": syntax error: SELECT "professors".* FROM "professors" WHERE (name LIKE ?,%Bill%) ORDER BY created_at DESC):
+     7:     <%= submit_tag "Search", :name => nil %>
+     8: <% end %>
+     9: 
+    10: <% if @professors.blank? %>
+    11:   <h4>There are no professors with names containing the characters <%= params[:search] %>.</h4>
+    12: <% end %>
+    13: 
+  
+app/views/professors/index.html.erb:10:in `_app_views_professors_index_html_erb___3722199903380586040_70107409233500'
+Started GET "/professors?utf8=%E2%9C%93&search=Bill" for 127.0.0.1 at 2017-10-01 15:36:10 -0600
+Processing by ProfessorsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Bill"}
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors" WHERE (name LIKE '%Bill%')[0m
+  Rendered professors/index.html.erb within layouts/application (7.8ms)
+Completed 200 OK in 35ms (Views: 28.7ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/professors?utf8=%E2%9C%93&search=" for 127.0.0.1 at 2017-10-01 15:36:24 -0600
+Processing by ProfessorsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>""}
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors" WHERE (name LIKE '%%')[0m
+  Rendered professors/index.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 32ms (Views: 29.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/professors?utf8=%E2%9C%93&search=Tarantula" for 127.0.0.1 at 2017-10-01 15:36:49 -0600
+Processing by ProfessorsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Tarantula"}
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT "professors".* FROM "professors" WHERE (name LIKE '%Tarantula%')[0m
+  Rendered professors/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 25ms (Views: 22.3ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 15:44:32 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (34.6ms)
+Completed 200 OK in 64ms (Views: 55.5ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 15:47:36 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.1ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (32.2ms)
+Completed 200 OK in 57ms (Views: 52.3ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/sections?utf8=%E2%9C%93&search=Fishing" for 127.0.0.1 at 2017-10-01 15:47:58 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Fishing"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.5ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (professor LIKE '%Fishing%', OR course LIKE '%Fishing%') ORDER BY created_at DESC[0m
+  Rendered sections/index.html.erb within layouts/application (3.8ms)
+Completed 500 Internal Server Error in 11ms (ActiveRecord: 0.5ms)
+
+
+  
+ActionView::Template::Error (SQLite3::SQLException: near "OR": syntax error: SELECT "sections".* FROM "sections" WHERE (professor LIKE '%Fishing%', OR course LIKE '%Fishing%') ORDER BY created_at DESC):
+    22:   </thead>
+    23: 
+    24:   <tbody>
+    25:     <% @sections.each do |section| %>
+    26:       <tr>
+    27:         <td><%= section.number %></td>
+    28:         <td><%= section.course.name %></td>
+  
+app/views/sections/index.html.erb:25:in `_app_views_sections_index_html_erb___436302941366827478_70107411543040'
+Started GET "/sections?utf8=%E2%9C%93&search=Fishing" for 127.0.0.1 at 2017-10-01 15:51:17 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Fishing"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.4ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (professor.name LIKE '%Fishing%', OR course.name LIKE '%Fishing%') ORDER BY created_at DESC[0m
+  Rendered sections/index.html.erb within layouts/application (3.6ms)
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 0.6ms)
+
+
+  
+ActionView::Template::Error (SQLite3::SQLException: near "OR": syntax error: SELECT "sections".* FROM "sections" WHERE (professor.name LIKE '%Fishing%', OR course.name LIKE '%Fishing%') ORDER BY created_at DESC):
+    22:   </thead>
+    23: 
+    24:   <tbody>
+    25:     <% @sections.each do |section| %>
+    26:       <tr>
+    27:         <td><%= section.number %></td>
+    28:         <td><%= section.course.name %></td>
+  
+app/views/sections/index.html.erb:25:in `_app_views_sections_index_html_erb___436302941366827478_70107412134820'
+Started GET "/sections?utf8=%E2%9C%93&search=Fishing" for 127.0.0.1 at 2017-10-01 15:53:51 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Fishing"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.5ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (professor_name LIKE '%Fishing%', OR course_name LIKE '%Fishing%') ORDER BY created_at DESC[0m
+  Rendered sections/index.html.erb within layouts/application (4.1ms)
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 0.7ms)
+
+
+  
+ActionView::Template::Error (SQLite3::SQLException: near "OR": syntax error: SELECT "sections".* FROM "sections" WHERE (professor_name LIKE '%Fishing%', OR course_name LIKE '%Fishing%') ORDER BY created_at DESC):
+    22:   </thead>
+    23: 
+    24:   <tbody>
+    25:     <% @sections.each do |section| %>
+    26:       <tr>
+    27:         <td><%= section.number %></td>
+    28:         <td><%= section.course.name %></td>
+  
+app/views/sections/index.html.erb:25:in `_app_views_sections_index_html_erb___436302941366827478_70107477655640'
+Started GET "/sections?utf8=%E2%9C%93&search=Fishing" for 127.0.0.1 at 2017-10-01 15:54:27 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Fishing"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.4ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (section_professor_name LIKE '%Fishing%', OR section_course_name LIKE '%Fishing%') ORDER BY created_at DESC[0m
+  Rendered sections/index.html.erb within layouts/application (3.6ms)
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 0.7ms)
+
+
+  
+ActionView::Template::Error (SQLite3::SQLException: near "OR": syntax error: SELECT "sections".* FROM "sections" WHERE (section_professor_name LIKE '%Fishing%', OR section_course_name LIKE '%Fishing%') ORDER BY created_at DESC):
+    22:   </thead>
+    23: 
+    24:   <tbody>
+    25:     <% @sections.each do |section| %>
+    26:       <tr>
+    27:         <td><%= section.number %></td>
+    28:         <td><%= section.course.name %></td>
+  
+app/views/sections/index.html.erb:25:in `_app_views_sections_index_html_erb___436302941366827478_70107443330340'
+Started GET "/sections?utf8=%E2%9C%93&search=Fishing" for 127.0.0.1 at 2017-10-01 15:55:07 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Fishing"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.4ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (section.professor.name LIKE '%Fishing%', OR section.course.name LIKE '%Fishing%') ORDER BY created_at DESC[0m
+  Rendered sections/index.html.erb within layouts/application (3.5ms)
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 0.6ms)
+
+
+  
+ActionView::Template::Error (SQLite3::SQLException: near "OR": syntax error: SELECT "sections".* FROM "sections" WHERE (section.professor.name LIKE '%Fishing%', OR section.course.name LIKE '%Fishing%') ORDER BY created_at DESC):
+    22:   </thead>
+    23: 
+    24:   <tbody>
+    25:     <% @sections.each do |section| %>
+    26:       <tr>
+    27:         <td><%= section.number %></td>
+    28:         <td><%= section.course.name %></td>
+  
+app/views/sections/index.html.erb:25:in `_app_views_sections_index_html_erb___436302941366827478_70107412574700'
+Started GET "/sections?utf8=%E2%9C%93&search=Fishing" for 127.0.0.1 at 2017-10-01 15:56:48 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Fishing"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.4ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (professor_id LIKE '%Fishing%', OR course_id LIKE '%Fishing%') ORDER BY created_at DESC[0m
+  Rendered sections/index.html.erb within layouts/application (3.6ms)
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 0.6ms)
+
+
+  
+ActionView::Template::Error (SQLite3::SQLException: near "OR": syntax error: SELECT "sections".* FROM "sections" WHERE (professor_id LIKE '%Fishing%', OR course_id LIKE '%Fishing%') ORDER BY created_at DESC):
+    22:   </thead>
+    23: 
+    24:   <tbody>
+    25:     <% @sections.each do |section| %>
+    26:       <tr>
+    27:         <td><%= section.number %></td>
+    28:         <td><%= section.course.name %></td>
+  
+app/views/sections/index.html.erb:25:in `_app_views_sections_index_html_erb___436302941366827478_70107413608200'
+Started GET "/sections?utf8=%E2%9C%93&search=Fishing" for 127.0.0.1 at 2017-10-01 16:00:22 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Fishing"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%Fishing%') ORDER BY created_at DESC[0m
+  Rendered sections/index.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 31ms (Views: 25.1ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/sections?utf8=%E2%9C%93&search=" for 127.0.0.1 at 2017-10-01 16:00:30 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>""}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%%') ORDER BY created_at DESC[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (31.3ms)
+Completed 200 OK in 54ms (Views: 49.6ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/sections?utf8=%E2%9C%93&search=" for 127.0.0.1 at 2017-10-01 16:01:52 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>""}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%%') ORDER BY created_at DESC[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.3ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (20.6ms)
+Completed 200 OK in 43ms (Views: 39.9ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/sections?utf8=%E2%9C%93&search=" for 127.0.0.1 at 2017-10-01 16:01:59 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>""}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%%') ORDER BY created_at DESC[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (7.6ms)
+Completed 200 OK in 42ms (Views: 39.2ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/sections?utf8=%E2%9C%93&search=3" for 127.0.0.1 at 2017-10-01 16:02:22 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"3"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%3%') ORDER BY created_at DESC[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (4.7ms)
+Completed 200 OK in 27ms (Views: 24.2ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/sections?utf8=%E2%9C%93&search=" for 127.0.0.1 at 2017-10-01 16:02:30 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>""}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%%') ORDER BY created_at DESC[0m
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.3ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (8.6ms)
+Completed 200 OK in 33ms (Views: 30.2ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/sections?utf8=%E2%9C%93&search=7" for 127.0.0.1 at 2017-10-01 16:02:33 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"7"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%7%') ORDER BY created_at DESC[0m
+  Rendered sections/index.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 28ms (Views: 25.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/sections?utf8=%E2%9C%93&search=7" for 127.0.0.1 at 2017-10-01 16:03:03 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"7"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%7%') ORDER BY created_at DESC[0m
+  Rendered sections/index.html.erb within layouts/application (1.7ms)
+Completed 200 OK in 24ms (Views: 21.4ms | ActiveRecord: 0.2ms)
+
+
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20171001222027)
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20171001222027)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar(35), "last_name" varchar(50), "email" varchar(100) DEFAULT '' NOT NULL, "username" varchar(25), "password" varchar(40), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171001222027"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AlterUsers (20171001223440)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171001223440"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+[0m
+Started GET "/sections?utf8=%E2%9C%93&search=7" for 127.0.0.1 at 2017-10-01 16:47:52 -0600
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"7"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%7%') ORDER BY created_at DESC[0m
+  Rendered sections/index.html.erb within layouts/application (4.3ms)
+Completed 200 OK in 245ms (Views: 228.8ms | ActiveRecord: 0.4ms)
+
+
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AlterUsersAgain (20171001224840)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.8ms)[0m  [1m[35mALTER TABLE "users" RENAME TO "admin_users"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "admin_users" ADD "username" varchar(25)[0m
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AlterUsersAgain (20171001224840)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "users" RENAME TO "admin_users"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "admin_users" ADD "username" varchar(25)[0m
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AlterUsersAgain (20171001224840)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "users" RENAME TO "admin_users"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aadmin_users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar(35) DEFAULT NULL, "last_name" varchar(50) DEFAULT NULL, "email" varchar(100) DEFAULT '' NOT NULL, "username" varchar(25) DEFAULT NULL, "password" varchar(40) DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aadmin_users" ("id","first_name","last_name","email","username","password","created_at","updated_at")
+                     SELECT "id","first_name","last_name","email","username","password","created_at","updated_at" FROM "admin_users"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "admin_users"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "admin_users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar(35) DEFAULT NULL, "last_name" varchar(50) DEFAULT NULL, "email" varchar(100) DEFAULT '' NOT NULL, "username" varchar(25) DEFAULT NULL, "password" varchar(40) DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "admin_users" ("id","first_name","last_name","email","username","password","created_at","updated_at")
+                     SELECT "id","first_name","last_name","email","username","password","created_at","updated_at" FROM "aadmin_users"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aadmin_users"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aadmin_users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar(35) DEFAULT NULL, "last_name" varchar(50) DEFAULT NULL, "email" varchar(100) DEFAULT '' NOT NULL, "username" varchar(25) DEFAULT NULL, "hashed_password" varchar(40) DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aadmin_users" ("id","first_name","last_name","email","username","hashed_password","created_at","updated_at")
+                     SELECT "id","first_name","last_name","email","username","password","created_at","updated_at" FROM "admin_users"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "admin_users"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "admin_users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar(35) DEFAULT NULL, "last_name" varchar(50) DEFAULT NULL, "email" varchar(100) DEFAULT '' NOT NULL, "username" varchar(25) DEFAULT NULL, "hashed_password" varchar(40) DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "admin_users" ("id","first_name","last_name","email","username","hashed_password","created_at","updated_at")
+                     SELECT "id","first_name","last_name","email","username","hashed_password","created_at","updated_at" FROM "aadmin_users"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aadmin_users"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_admin_users_on_username" ON "admin_users" ("username")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171001224840"]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_admin_users_on_username' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_admin_users_on_username' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddPasswordDigest (20171001225412)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aadmin_users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar(35) DEFAULT NULL, "last_name" varchar(50) DEFAULT NULL, "email" varchar(100) DEFAULT '' NOT NULL, "username" varchar(25) DEFAULT NULL, "hashed_password" varchar(40) DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_admin_users_on_username' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_admin_users_on_username' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_aadmin_users_on_username" ON "aadmin_users" ("username")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aadmin_users" ("id","first_name","last_name","email","username","hashed_password","created_at","updated_at")
+                     SELECT "id","first_name","last_name","email","username","hashed_password","created_at","updated_at" FROM "admin_users"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE "admin_users"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "admin_users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar(35) DEFAULT NULL, "last_name" varchar(50) DEFAULT NULL, "email" varchar(100) DEFAULT '' NOT NULL, "username" varchar(25) DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_aadmin_users_on_username' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_aadmin_users_on_username' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_admin_users_on_username" ON "admin_users" ("username")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "admin_users" ("id","first_name","last_name","email","username","created_at","updated_at")
+                     SELECT "id","first_name","last_name","email","username","created_at","updated_at" FROM "aadmin_users"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "aadmin_users"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "admin_users" ADD "password_digest" varchar[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171001225412"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_admin_users_on_username' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_admin_users_on_username' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "admin_users" ("first_name", "last_name", "username", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["first_name", "Tovio"], ["last_name", "Roberts"], ["username", "troberts"], ["created_at", "2017-10-01 23:14:30.732920"], ["updated_at", "2017-10-01 23:14:30.732920"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAdminUser Load (0.1ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.3ms)[0m  [1m[33mUPDATE "admin_users" SET "email" = ?, "updated_at" = ? WHERE "admin_users"."id" = ?[0m  [["email", "clownfragment@gmail.com"], ["updated_at", "2017-10-01 23:16:30.059772"], ["id", 1]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAdminUser Load (1.4ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" LIMIT ?[0m  [["LIMIT", 11]]
+Started GET "/sections?utf8=%E2%9C%93&search=7" for 127.0.0.1 at 2017-10-01 17:44:16 -0600
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"7"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%7%') ORDER BY created_at DESC[0m
+  Rendered sections/index.html.erb within layouts/application (5.0ms)
+Completed 200 OK in 251ms (Views: 234.3ms | ActiveRecord: 0.8ms)
+
+
+  [1m[36mAdminUser Load (0.1ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" ORDER BY "admin_users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAdminUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "admin_users" WHERE "admin_users"."username" = ? AND ("admin_users"."id" != ?) LIMIT ?[0m  [["username", "troberts"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "admin_users" SET "updated_at" = ?, "password_digest" = ? WHERE "admin_users"."id" = ?[0m  [["updated_at", "2017-10-01 23:50:22.387565"], ["password_digest", "$2a$10$Mgv20ayDQ6FnODQVTOeBE.QGTs8lXRUSWq7kZTTTlvmAepW.6Lp1O"], ["id", 1]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" ORDER BY "admin_users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 18:10:04 -0600
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 299ms (Views: 289.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 18:12:23 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (11.4ms)
+Completed 200 OK in 47ms (Views: 38.0ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-01 18:12:25 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (9.6ms)
+Completed 200 OK in 37ms (Views: 31.7ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 18:12:27 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.3ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (31.6ms)
+Completed 200 OK in 66ms (Views: 54.5ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 18:12:29 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 32ms (Views: 29.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2017-10-01 18:13:35 -0600
+  
+ActionController::RoutingError (No route matches [GET] "/login"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `call'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/access/login" for 127.0.0.1 at 2017-10-01 18:13:59 -0600
+Processing by AccessController#login as HTML
+  Rendering access/login.html.erb within layouts/application
+  Rendered access/login.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 32ms (Views: 30.1ms)
+
+
+  [1m[36mAdminUser Load (0.1ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" ORDER BY "admin_users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Started POST "/access/attempt_login" for 127.0.0.1 at 2017-10-01 18:25:48 -0600
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AccessController#attempt_login as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Ji8847QSBpSMhsQPF4i6ZraYDdS3d89ysaAxj71WU2xftD4EfDIlZcOB2K7wy5Rxq37tTMLtd9u4ZUicvAzjFA==", "username"=>"troberts", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."username" = ? ORDER BY "admin_users"."id" ASC LIMIT ?[0m  [["username", "troberts"], ["LIMIT", 1]]
+  Rendering access/login.html.erb within layouts/application
+  Rendered access/login.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 376ms (Views: 277.9ms | ActiveRecord: 0.9ms)
+
+
+Started POST "/access/attempt_login" for 127.0.0.1 at 2017-10-01 18:26:02 -0600
+Processing by AccessController#attempt_login as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"uCuKBEArOkfvISqOJRPYQ62kOPJwvs/R9cizuyg2jXDBsIjjiAsZtqAmNi/CUPZUsELYagUkd3j8DcqoKWw9CA==", "username"=>"troberts", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mAdminUser Load (0.1ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."username" = ? ORDER BY "admin_users"."id" ASC LIMIT ?[0m  [["username", "troberts"], ["LIMIT", 1]]
+  Rendering access/login.html.erb within layouts/application
+  Rendered access/login.html.erb within layouts/application (1.3ms)
+Completed 200 OK in 101ms (Views: 23.3ms | ActiveRecord: 0.7ms)
+
+
+  [1m[36mAdminUser Load (0.1ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" ORDER BY "admin_users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAdminUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "admin_users" WHERE "admin_users"."username" = ? AND ("admin_users"."id" != ?) LIMIT ?[0m  [["username", "troberts"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "admin_users" SET "updated_at" = ?, "password_digest" = ? WHERE "admin_users"."id" = ?[0m  [["updated_at", "2017-10-02 00:26:29.511832"], ["password_digest", "$2a$10$.2gTEPn57lpuD8HlVn4SLuiMnbBEIiKmaMvQ93UW7qL7jodLdQ0QO"], ["id", 1]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+Started POST "/access/attempt_login" for 127.0.0.1 at 2017-10-01 18:26:47 -0600
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AccessController#attempt_login as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"g6a68+ou0CIknnk02jYNI6YHCFMHxL4ccuvSpBZ09Iz6PbgUIg7z02uZZZU9dSM0u+Hoy3JeBrV7Lqu3Fy5E9A==", "username"=>"troberts", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."username" = ? ORDER BY "admin_users"."id" ASC LIMIT ?[0m  [["username", "troberts"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admin
+Completed 302 Found in 99ms (ActiveRecord: 0.9ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 18:26:47 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (1.6ms)
+Completed 200 OK in 268ms (Views: 266.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/access/logout" for 127.0.0.1 at 2017-10-01 18:27:32 -0600
+Processing by AccessController#logout as HTML
+Redirected to http://localhost:3000/access/login
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/access/login" for 127.0.0.1 at 2017-10-01 18:27:32 -0600
+Processing by AccessController#login as HTML
+  Rendering access/login.html.erb within layouts/application
+  Rendered access/login.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 30ms (Views: 27.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/access/attempt_login" for 127.0.0.1 at 2017-10-01 18:27:50 -0600
+Processing by AccessController#attempt_login as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"lVCNA2eNGQbxzrtl+Q2UytdrulrjVY+uSPnir3dlCDBoZZhjuOFUOyH7rOenJwtwo0inGSPndU0IQFrLUNiWXg==", "username"=>"troberts", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."username" = ? ORDER BY "admin_users"."id" ASC LIMIT ?[0m  [["username", "troberts"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admin
+Completed 302 Found in 80ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 18:27:50 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 24ms (Views: 22.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/access/logout" for 127.0.0.1 at 2017-10-01 18:34:58 -0600
+Processing by AccessController#logout as HTML
+Redirected to http://localhost:3000/access/login
+Completed 302 Found in 1ms
+
+
+Started GET "/access/login" for 127.0.0.1 at 2017-10-01 18:34:58 -0600
+Processing by AccessController#login as HTML
+  Rendering access/login.html.erb within layouts/application
+  Rendered access/login.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 29ms (Views: 27.4ms)
+
+
+Started POST "/access/attempt_login" for 127.0.0.1 at 2017-10-01 18:35:03 -0600
+Processing by AccessController#attempt_login as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"1pKzYejyOhqBmGggozI+sScgetOkbreo6+yDJtuJfYIrp6YBN553J1Gtf6L9GKELUwNnkGTcTUurVTtC/DTj7A==", "username"=>"troberts", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mAdminUser Load (0.1ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."username" = ? ORDER BY "admin_users"."id" ASC LIMIT ?[0m  [["username", "troberts"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admin
+Completed 302 Found in 90ms (ActiveRecord: 1.2ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 18:35:03 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 23ms (Views: 20.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/access/logout" for 127.0.0.1 at 2017-10-01 18:35:18 -0600
+Processing by AccessController#logout as HTML
+Redirected to http://localhost:3000/access/login
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/access/login" for 127.0.0.1 at 2017-10-01 18:35:18 -0600
+Processing by AccessController#login as HTML
+  Rendering access/login.html.erb within layouts/application
+  Rendered access/login.html.erb within layouts/application (1.6ms)
+Completed 200 OK in 60ms (Views: 57.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 18:35:22 -0600
+Processing by AccessController#menu as HTML
+Redirected to http://localhost:3000/access/login
+Filter chain halted as :confirm_logged_in rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/access/login" for 127.0.0.1 at 2017-10-01 18:35:22 -0600
+Processing by AccessController#login as HTML
+  Rendering access/login.html.erb within layouts/application
+  Rendered access/login.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 30ms (Views: 27.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/access/attempt_login" for 127.0.0.1 at 2017-10-01 18:36:07 -0600
+Processing by AccessController#attempt_login as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"9z7j109Df2B/5KwphSbg35MYymg0QvQE2o4xjX8bjdGOpeEwh2NckTDjsIhiZc7Ijv4q8EHYTK3TS0iefkE9qQ==", "username"=>"troberts", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."username" = ? ORDER BY "admin_users"."id" ASC LIMIT ?[0m  [["username", "troberts"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admin
+Completed 302 Found in 77ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 18:36:07 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 28ms (Views: 26.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/access/logout" for 127.0.0.1 at 2017-10-01 18:45:07 -0600
+Processing by AccessController#logout as HTML
+Redirected to http://localhost:3000/access/login
+Completed 302 Found in 1ms
+
+
+Started GET "/access/login" for 127.0.0.1 at 2017-10-01 18:45:07 -0600
+Processing by AccessController#login as HTML
+  Rendering access/login.html.erb within layouts/application
+  Rendered access/login.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 48ms (Views: 46.0ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 18:45:18 -0600
+Processing by CoursesController#index as HTML
+Completed 500 Internal Server Error in 57ms
+
+
+  
+NoMethodError (undefined method `confirm_logged_in' for #<CoursesController:0x007fb65263f190>):
+  
+activesupport (5.1.4) lib/active_support/callbacks.rb:413:in `block in make_lambda'
+activesupport (5.1.4) lib/active_support/callbacks.rb:197:in `call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:197:in `block (2 levels) in halting'
+actionpack (5.1.4) lib/abstract_controller/callbacks.rb:12:in `call'
+actionpack (5.1.4) lib/abstract_controller/callbacks.rb:12:in `block (2 levels) in <module:Callbacks>'
+activesupport (5.1.4) lib/active_support/callbacks.rb:198:in `call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:198:in `block in halting'
+activesupport (5.1.4) lib/active_support/callbacks.rb:507:in `call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:507:in `block in invoke_before'
+activesupport (5.1.4) lib/active_support/callbacks.rb:507:in `each'
+activesupport (5.1.4) lib/active_support/callbacks.rb:507:in `invoke_before'
+activesupport (5.1.4) lib/active_support/callbacks.rb:130:in `run_callbacks'
+actionpack (5.1.4) lib/abstract_controller/callbacks.rb:19:in `process_action'
+actionpack (5.1.4) lib/action_controller/metal/rescue.rb:20:in `process_action'
+actionpack (5.1.4) lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+activesupport (5.1.4) lib/active_support/notifications.rb:166:in `block in instrument'
+activesupport (5.1.4) lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+activesupport (5.1.4) lib/active_support/notifications.rb:166:in `instrument'
+actionpack (5.1.4) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+actionpack (5.1.4) lib/action_controller/metal/params_wrapper.rb:252:in `process_action'
+activerecord (5.1.4) lib/active_record/railties/controller_runtime.rb:22:in `process_action'
+actionpack (5.1.4) lib/abstract_controller/base.rb:124:in `process'
+actionview (5.1.4) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.4) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.4) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:834:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.4) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `call'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/" for 127.0.0.1 at 2017-10-01 18:45:50 -0600
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/tbot/.rvm/gems/ruby-2.2.6/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/tbot/.rvm/gems/ruby-2.2.6/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb (4.0ms)
+Completed 200 OK in 20ms (Views: 9.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 18:46:02 -0600
+Processing by AccessController#menu as HTML
+Completed 500 Internal Server Error in 66ms (ActiveRecord: 0.0ms)
+
+
+  
+NoMethodError (undefined method `confirm_logged_in' for #<AccessController:0x007f88bca171a0>):
+  
+activesupport (5.1.4) lib/active_support/callbacks.rb:413:in `block in make_lambda'
+activesupport (5.1.4) lib/active_support/callbacks.rb:178:in `call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:178:in `block (2 levels) in halting_and_conditional'
+actionpack (5.1.4) lib/abstract_controller/callbacks.rb:12:in `call'
+actionpack (5.1.4) lib/abstract_controller/callbacks.rb:12:in `block (2 levels) in <module:Callbacks>'
+activesupport (5.1.4) lib/active_support/callbacks.rb:179:in `call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:179:in `block in halting_and_conditional'
+activesupport (5.1.4) lib/active_support/callbacks.rb:507:in `call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:507:in `block in invoke_before'
+activesupport (5.1.4) lib/active_support/callbacks.rb:507:in `each'
+activesupport (5.1.4) lib/active_support/callbacks.rb:507:in `invoke_before'
+activesupport (5.1.4) lib/active_support/callbacks.rb:130:in `run_callbacks'
+actionpack (5.1.4) lib/abstract_controller/callbacks.rb:19:in `process_action'
+actionpack (5.1.4) lib/action_controller/metal/rescue.rb:20:in `process_action'
+actionpack (5.1.4) lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+activesupport (5.1.4) lib/active_support/notifications.rb:166:in `block in instrument'
+activesupport (5.1.4) lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+activesupport (5.1.4) lib/active_support/notifications.rb:166:in `instrument'
+actionpack (5.1.4) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+actionpack (5.1.4) lib/action_controller/metal/params_wrapper.rb:252:in `process_action'
+activerecord (5.1.4) lib/active_record/railties/controller_runtime.rb:22:in `process_action'
+actionpack (5.1.4) lib/abstract_controller/base.rb:124:in `process'
+actionview (5.1.4) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.4) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.4) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.4) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.4) lib/action_dispatch/routing/route_set.rb:834:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+rack (2.0.3) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.3) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.4) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.4) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.4) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `call'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 18:47:57 -0600
+Processing by AccessController#menu as HTML
+Redirected to http://localhost:3000/access/login
+Filter chain halted as :confirm_logged_in rendered or redirected
+Completed 302 Found in 1ms
+
+
+Started GET "/access/login" for 127.0.0.1 at 2017-10-01 18:47:57 -0600
+Processing by AccessController#login as HTML
+  Rendering access/login.html.erb within layouts/application
+  Rendered access/login.html.erb within layouts/application (1.6ms)
+Completed 200 OK in 222ms (Views: 219.8ms)
+
+
+Started GET "/subjects" for 127.0.0.1 at 2017-10-01 18:48:02 -0600
+  
+ActionController::RoutingError (No route matches [GET] "/subjects"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `call'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 18:48:07 -0600
+Processing by CoursesController#index as HTML
+Redirected to http://localhost:3000/access/login
+Filter chain halted as :confirm_logged_in rendered or redirected
+Completed 302 Found in 1ms
+
+
+Started GET "/access/login" for 127.0.0.1 at 2017-10-01 18:48:07 -0600
+Processing by AccessController#login as HTML
+  Rendering access/login.html.erb within layouts/application
+  Rendered access/login.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 23ms (Views: 21.4ms)
+
+
+Started POST "/access/attempt_login" for 127.0.0.1 at 2017-10-01 18:49:24 -0600
+Processing by AccessController#attempt_login as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"qiuOWDHdMoZnwtSLkizKn9PhZ3Vyc1NLybe0cCKdYMDTsIy/+f0RdyjFyCp1b+SIzgeH7Qfp6+LAcs1jI8fQuA==", "username"=>"troberts", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."username" = ? ORDER BY "admin_users"."id" ASC LIMIT ?[0m  [["username", "troberts"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admin
+Completed 302 Found in 90ms (ActiveRecord: 1.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 18:49:24 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 22ms (Views: 20.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 18:49:33 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (10.8ms)
+Completed 200 OK in 43ms (Views: 32.7ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-01 18:49:36 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (10.5ms)
+Completed 200 OK in 65ms (Views: 59.3ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 18:49:38 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.3ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (34.1ms)
+Completed 200 OK in 74ms (Views: 62.7ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 18:49:40 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 34ms (Views: 31.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-01 20:22:30 -0600
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/tbot/.rvm/gems/ruby-2.2.6/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/tbot/.rvm/gems/ruby-2.2.6/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb (3.6ms)
+Completed 200 OK in 19ms (Views: 8.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/access/login" for 127.0.0.1 at 2017-10-01 20:22:34 -0600
+Processing by AccessController#login as HTML
+  Rendering access/login.html.erb within layouts/application
+  Rendered access/login.html.erb within layouts/application (1.6ms)
+Completed 200 OK in 320ms (Views: 317.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/access/attempt_login" for 127.0.0.1 at 2017-10-01 20:22:41 -0600
+Processing by AccessController#attempt_login as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"wyuNU2b/Ou/YEGt/6A+4XE3/RaY5+fD7knzZqitAX6y6sI+0rt8ZHpcXd94PTJZLUBmlPkxjSFKbuaC5Khrv1A==", "username"=>"troberts", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mAdminUser Load (0.7ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."username" = ? ORDER BY "admin_users"."id" ASC LIMIT ?[0m  [["username", "troberts"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admin
+Completed 302 Found in 93ms (ActiveRecord: 1.5ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 20:22:42 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 25ms (Views: 22.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 20:22:44 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 31ms (Views: 29.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 20:23:52 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 26ms (Views: 24.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin_users" for 127.0.0.1 at 2017-10-01 20:23:53 -0600
+Processing by AdminUsersController#index as HTML
+  Rendering admin_users/index.html.erb within layouts/application
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "admin_users"[0m
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT "admin_users".* FROM "admin_users" ORDER BY last_name ASC, first_name ASC[0m
+  Rendered admin_users/index.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 44ms (Views: 39.7ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/admin_users/new" for 127.0.0.1 at 2017-10-01 20:24:21 -0600
+Processing by AdminUsersController#new as HTML
+  Rendering admin_users/new.html.erb within layouts/application
+  Rendered admin_users/_form.html.erb (115.6ms)
+  Rendered admin_users/new.html.erb within layouts/application (119.0ms)
+Completed 500 Internal Server Error in 129ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined method `error_messages_for' for #<#<Class:0x007f89700243f0>:0x007f89735bd3b8>):
+    1: <%= error_messages_for(f.object) %>
+    2: 
+    3: <table summary="Admin user form fields">
+    4:   <tr>
+  
+app/views/admin_users/_form.html.erb:1:in `_app_views_admin_users__form_html_erb___523454513859011150_70114122432580'
+app/views/admin_users/new.html.erb:10:in `block in _app_views_admin_users_new_html_erb___922662166574043067_70114161324200'
+app/views/admin_users/new.html.erb:8:in `_app_views_admin_users_new_html_erb___922662166574043067_70114161324200'
+Started GET "/admin_users" for 127.0.0.1 at 2017-10-01 20:25:23 -0600
+Processing by AdminUsersController#index as HTML
+  Rendering admin_users/index.html.erb within layouts/application
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "admin_users"[0m
+  [1m[36mAdminUser Load (0.4ms)[0m  [1m[34mSELECT "admin_users".* FROM "admin_users" ORDER BY last_name ASC, first_name ASC[0m
+  Rendered admin_users/index.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 37ms (Views: 33.2ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admin_users/1/edit" for 127.0.0.1 at 2017-10-01 20:25:42 -0600
+Processing by AdminUsersController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering admin_users/edit.html.erb within layouts/application
+  Rendered admin_users/_form.html.erb (98.9ms)
+  Rendered admin_users/edit.html.erb within layouts/application (102.5ms)
+Completed 500 Internal Server Error in 114ms (ActiveRecord: 0.2ms)
+
+
+  
+ActionView::Template::Error (undefined method `error_messages_for' for #<#<Class:0x007f89700243f0>:0x007f8975295800>):
+    1: <%= error_messages_for(f.object) %>
+    2: 
+    3: <table summary="Admin user form fields">
+    4:   <tr>
+  
+app/views/admin_users/_form.html.erb:1:in `_app_views_admin_users__form_html_erb___523454513859011150_70114161671400'
+app/views/admin_users/edit.html.erb:10:in `block in _app_views_admin_users_edit_html_erb__2940401532246529423_70114176447020'
+app/views/admin_users/edit.html.erb:8:in `_app_views_admin_users_edit_html_erb__2940401532246529423_70114176447020'
+Started GET "/admin_users" for 127.0.0.1 at 2017-10-01 20:26:16 -0600
+Processing by AdminUsersController#index as HTML
+  Rendering admin_users/index.html.erb within layouts/application
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "admin_users"[0m
+  [1m[36mAdminUser Load (0.1ms)[0m  [1m[34mSELECT "admin_users".* FROM "admin_users" ORDER BY last_name ASC, first_name ASC[0m
+  Rendered admin_users/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 31ms (Views: 28.8ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/admin_users/new" for 127.0.0.1 at 2017-10-01 20:26:17 -0600
+Processing by AdminUsersController#new as HTML
+  Rendering admin_users/new.html.erb within layouts/application
+  Rendered admin_users/_form.html.erb (18.7ms)
+  Rendered admin_users/new.html.erb within layouts/application (21.5ms)
+Completed 200 OK in 55ms (Views: 51.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin_users/1/edit" for 127.0.0.1 at 2017-10-01 20:26:22 -0600
+Processing by AdminUsersController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mAdminUser Load (0.1ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering admin_users/edit.html.erb within layouts/application
+  Rendered admin_users/_form.html.erb (2.8ms)
+  Rendered admin_users/edit.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 36ms (Views: 31.7ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/admin_users/new" for 127.0.0.1 at 2017-10-01 20:26:55 -0600
+Processing by AdminUsersController#new as HTML
+  Rendering admin_users/new.html.erb within layouts/application
+  Rendered admin_users/_form.html.erb (2.5ms)
+  Rendered admin_users/new.html.erb within layouts/application (6.6ms)
+Completed 200 OK in 39ms (Views: 35.7ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/admin_users" for 127.0.0.1 at 2017-10-01 20:27:24 -0600
+Processing by AdminUsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"LaSigdtGg2ZKXC0Je4ys1caryPHy+nnvg4uOoZBMzq6AA09RBIxZfCHvhvIDdp9PdDQbLa6OqYs6SfeWzLfHPA==", "admin_user"=>{"first_name"=>"Andrew", "last_name"=>"Roberts", "email"=>"admin@toviodesigns.com", "username"=>"aroberts", "password"=>"[FILTERED]"}, "commit"=>"Create Admin User"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAdminUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "admin_users" WHERE "admin_users"."username" = ? LIMIT ?[0m  [["username", "aroberts"], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "admin_users" ("first_name", "last_name", "email", "username", "created_at", "updated_at", "password_digest") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["first_name", "Andrew"], ["last_name", "Roberts"], ["email", "admin@toviodesigns.com"], ["username", "aroberts"], ["created_at", "2017-10-02 02:27:24.887353"], ["updated_at", "2017-10-02 02:27:24.887353"], ["password_digest", "$2a$10$oyr8xDpi2EXmOvyTR3.DT.5wQz8/6P789RLDeDs/4PYfIEe7EElcK"]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admin_users
+Completed 302 Found in 87ms (ActiveRecord: 1.4ms)
+
+
+Started GET "/admin_users" for 127.0.0.1 at 2017-10-01 20:27:24 -0600
+Processing by AdminUsersController#index as HTML
+  Rendering admin_users/index.html.erb within layouts/application
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "admin_users"[0m
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT "admin_users".* FROM "admin_users" ORDER BY last_name ASC, first_name ASC[0m
+  Rendered admin_users/index.html.erb within layouts/application (3.3ms)
+Completed 200 OK in 35ms (Views: 32.7ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 20:27:43 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 33ms (Views: 30.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-01 20:36:12 -0600
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/tbot/.rvm/gems/ruby-2.2.6/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/tbot/.rvm/gems/ruby-2.2.6/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb (2.4ms)
+Completed 200 OK in 7ms (Views: 4.6ms)
+
+
+Started GET "/access/logout" for 127.0.0.1 at 2017-10-01 20:39:40 -0600
+  
+ArgumentError (Missing :controller key on routes definition, please check your routes.):
+  
+config/routes.rb:3:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+Started GET "/access/logout" for 127.0.0.1 at 2017-10-01 20:39:55 -0600
+Processing by AccessController#logout as HTML
+Redirected to http://localhost:3000/access/login
+Completed 302 Found in 1ms
+
+
+Started GET "/access/login" for 127.0.0.1 at 2017-10-01 20:39:55 -0600
+Processing by AccessController#login as HTML
+  Rendering access/login.html.erb within layouts/application
+  Rendered access/login.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 35ms (Views: 33.4ms)
+
+
+Started POST "/access/attempt_login" for 127.0.0.1 at 2017-10-01 20:46:48 -0600
+Processing by AccessController#attempt_login as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"8GV+4H3NaJPdCKLNsoGsrT1XSYPfSy8zY13GEpOxv0mJ/nwHte1LYpIPvmxVwoK6ILGpG6rRl5pqmL8BkusPMQ==", "username"=>"aroberts", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."username" = ? ORDER BY "admin_users"."id" ASC LIMIT ?[0m  [["username", "aroberts"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admin
+Completed 302 Found in 91ms (ActiveRecord: 0.9ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 20:46:48 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 27ms (Views: 25.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-01 20:46:58 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (11.4ms)
+Completed 200 OK in 66ms (Views: 53.8ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/courses/1/edit" for 127.0.0.1 at 2017-10-01 20:47:09 -0600
+Processing by CoursesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering courses/edit.html.erb within layouts/application
+  Rendered courses/_form.html.erb (3.4ms)
+  Rendered courses/edit.html.erb within layouts/application (5.9ms)
+Completed 200 OK in 46ms (Views: 40.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/courses?utf8=%E2%9C%93&search=under" for 127.0.0.1 at 2017-10-01 20:47:33 -0600
+Processing by CoursesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"under"}
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE (name LIKE '%under%' OR department LIKE '%under%') ORDER BY created_at DESC[0m
+  Rendered courses/index.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 32ms (Views: 28.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-01 20:47:51 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 27ms (Views: 25.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-01 20:47:54 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.4ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (8.8ms)
+Completed 200 OK in 44ms (Views: 36.7ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/professors?utf8=%E2%9C%93&search=Mas" for 127.0.0.1 at 2017-10-01 20:48:00 -0600
+Processing by ProfessorsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Mas"}
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors" WHERE (name LIKE '%Mas%')[0m
+  Rendered professors/index.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 33ms (Views: 30.5ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/professors?utf8=%E2%9C%93&search=Mas" for 127.0.0.1 at 2017-10-01 20:48:13 -0600
+Processing by ProfessorsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Mas"}
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors" WHERE (name LIKE '%Mas%')[0m
+  Rendered professors/index.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 30ms (Views: 27.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-01 20:48:22 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 45ms (Views: 42.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 20:48:24 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.3ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (27.7ms)
+Completed 200 OK in 64ms (Views: 53.0ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/sections?utf8=%E2%9C%93&search=3" for 127.0.0.1 at 2017-10-01 20:48:35 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"3"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%3%') ORDER BY created_at DESC[0m
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (4.9ms)
+Completed 200 OK in 31ms (Views: 28.2ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-01 20:48:42 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (1.4ms)
+Completed 200 OK in 42ms (Views: 38.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin_users" for 127.0.0.1 at 2017-10-01 20:48:44 -0600
+Processing by AdminUsersController#index as HTML
+  Rendering admin_users/index.html.erb within layouts/application
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "admin_users"[0m
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT "admin_users".* FROM "admin_users" ORDER BY last_name ASC, first_name ASC[0m
+  Rendered admin_users/index.html.erb within layouts/application (4.4ms)
+Completed 200 OK in 34ms (Views: 31.8ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/admin_users/2/edit" for 127.0.0.1 at 2017-10-01 20:48:59 -0600
+Processing by AdminUsersController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering admin_users/edit.html.erb within layouts/application
+  Rendered admin_users/_form.html.erb (3.2ms)
+  Rendered admin_users/edit.html.erb within layouts/application (7.4ms)
+Completed 200 OK in 44ms (Views: 40.1ms | ActiveRecord: 0.2ms)
+
+
+Started PATCH "/admin_users/2" for 127.0.0.1 at 2017-10-01 20:49:15 -0600
+Processing by AdminUsersController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"EdEtXXZOGuMAapXUK9I2DLGVEqU69Po8mmRzb1cKlSr01RaRnTZoIoQ4yoq13I543tkzBgAyt/lElGsaAPoX1w==", "admin_user"=>{"first_name"=>"Andrew", "last_name"=>"Roberts", "email"=>"admin@toviodesigns.com", "username"=>"aroberts", "password"=>"[FILTERED]"}, "commit"=>"Update Admin User", "id"=>"2"}
+  [1m[36mAdminUser Load (0.1ms)[0m  [1m[34mSELECT  "admin_users".* FROM "admin_users" WHERE "admin_users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mAdminUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "admin_users" WHERE "admin_users"."username" = ? AND ("admin_users"."id" != ?) LIMIT ?[0m  [["username", "aroberts"], ["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "admin_users" SET "password_digest" = ?, "updated_at" = ? WHERE "admin_users"."id" = ?[0m  [["password_digest", "$2a$10$JosWMFiZ1A5yGxvgCqD1Xu6dcBJ51zl73gA3jPSegQFvoiE7J1N.G"], ["updated_at", "2017-10-02 02:49:15.334750"], ["id", 2]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admin_users
+Completed 302 Found in 86ms (ActiveRecord: 2.9ms)
+
+
+Started GET "/admin_users" for 127.0.0.1 at 2017-10-01 20:49:15 -0600
+Processing by AdminUsersController#index as HTML
+  Rendering admin_users/index.html.erb within layouts/application
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "admin_users"[0m
+  [1m[36mAdminUser Load (0.2ms)[0m  [1m[34mSELECT "admin_users".* FROM "admin_users" ORDER BY last_name ASC, first_name ASC[0m
+  Rendered admin_users/index.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 32ms (Views: 29.7ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2017-10-01 21:25:16 -0600
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 42ms (Views: 39.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 21:25:18 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (8.5ms)
+Completed 200 OK in 44ms (Views: 40.9ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/sections?utf8=%E2%9C%93&search=3" for 127.0.0.1 at 2017-10-01 21:26:01 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"3"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%3%') ORDER BY created_at DESC[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (4.3ms)
+Completed 200 OK in 32ms (Views: 29.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/sections?utf8=%E2%9C%93&search=3" for 127.0.0.1 at 2017-10-01 21:26:22 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"3"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%3%') ORDER BY created_at DESC[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (4.2ms)
+Completed 200 OK in 32ms (Views: 29.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-01 21:27:23 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (8.0ms)
+Completed 200 OK in 35ms (Views: 32.4ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-01 21:27:40 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (3.3ms)
+Completed 200 OK in 32ms (Views: 29.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/sections?utf8=%E2%9C%93&search=1" for 127.0.0.1 at 2017-10-01 21:30:50 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"1"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%1%') ORDER BY created_at DESC[0m
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (4.8ms)
+Completed 200 OK in 38ms (Views: 35.5ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-01 21:30:57 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 29ms (Views: 26.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/professors?utf8=%E2%9C%93&search=Bill" for 127.0.0.1 at 2017-10-01 21:31:01 -0600
+Processing by ProfessorsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"Bill"}
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors" WHERE (name LIKE '%Bill%')[0m
+  Rendered professors/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 32ms (Views: 28.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/sections?utf8=%E2%9C%93&search=7" for 127.0.0.1 at 2017-10-01 21:35:02 -0600
+Processing by SectionsController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"7"}
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections" WHERE (number LIKE '%7%') ORDER BY created_at DESC[0m
+  Rendered sections/index.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 29ms (Views: 26.5ms | ActiveRecord: 0.2ms)
+
+
