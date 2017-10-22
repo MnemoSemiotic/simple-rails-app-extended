@@ -9,9 +9,25 @@
   </head>
 
   <body>
+    <header class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <nav>
+          <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to("Home", access_menu_path) %></li>
+            <li><%= link_to("Courses", courses_path) %></li>
+            <li><%= link_to("Professors", professors_path) %></li>
+            <li><%= link_to("Sections", sections_path) %></li>
+            <li><%= link_to("Manage Admins", admin_users_path) %></li>
+            <li><%= link_to "Students", '#' %></li>
+            <li><%= link_to "Enrollments", '#' %></li>
+            <li><%= link_to("Logout", access_logout_path) %></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-
-
-    <%= yield %>
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
