@@ -22,3 +22,25 @@
 
 <%= link_to 'Edit', edit_student_path(@student) %> |
 <%= link_to 'Back', students_path %>
+<p></p>
+<table>
+  <thead>
+    <tr>
+
+      <th>&nbsp;Course Enrollments</th>
+      <th>Section#</th>
+      <th>Professor</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @student.sections.each do |section| %>
+      <tr>
+        <td ><%= section.course.name %></td>
+        <td><%= section.number %></td>
+        <td><%= section.professor.name %></td>
+      </tr>
+    <% end %>
+
+  </tbody>
+</table>
