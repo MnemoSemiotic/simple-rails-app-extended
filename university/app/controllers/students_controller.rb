@@ -1,4 +1,5 @@
 class StudentsController < ApplicationController
+  before_action :confirm_logged_in
   before_action :set_student, only: [:show, :edit, :update, :destroy]
 
   # GET /students

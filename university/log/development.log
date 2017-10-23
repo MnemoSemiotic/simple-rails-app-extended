@@ -3433,3 +3433,238 @@ Processing by AccessController#menu as HTML
 Completed 200 OK in 48ms (Views: 45.0ms | ActiveRecord: 0.0ms)
 
 
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateSectionsStudentsJoin (20171022235227)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "enrollments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "section_id" integer, "student_id" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_enrollments_on_section_id_and_student_id" ON "enrollments" ("section_id", "student_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171022235227"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_admin_users_on_username' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_admin_users_on_username' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_enrollments_on_section_id_and_student_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_enrollments_on_section_id_and_student_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+[0m
+  [1m[36mStudent Load (1.2ms)[0m  [1m[34mSELECT  "students".* FROM "students" LIMIT ?[0m  [["LIMIT", 11]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "students" ("first_name", "last_name", "student_id", "credit_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["first_name", "Ralphy"], ["last_name", "Void"], ["student_id", 9785645], ["credit_number", 24], ["created_at", "2017-10-23 00:08:27.966157"], ["updated_at", "2017-10-23 00:08:27.966157"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mSection Load (0.1ms)[0m  [1m[34mSELECT  "sections".* FROM "sections" WHERE "sections"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Load (0.3ms)[0m  [1m[34mSELECT  "students".* FROM "students" INNER JOIN "sections_students" ON "students"."id" = "sections_students"."student_id" WHERE "sections_students"."section_id" = ? LIMIT ?[0m  [["section_id", 2], ["LIMIT", 11]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mStudent Load (1.4ms)[0m  [1m[34mSELECT  "students".* FROM "students" LIMIT ?[0m  [["LIMIT", 11]]
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT  "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSection Load (0.1ms)[0m  [1m[34mSELECT  "sections".* FROM "sections" WHERE "sections"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Load (0.3ms)[0m  [1m[34mSELECT  "students".* FROM "students" INNER JOIN "sections_students" ON "students"."id" = "sections_students"."student_id" WHERE "sections_students"."section_id" = ? LIMIT ?[0m  [["section_id", 2], ["LIMIT", 11]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateSectionsStudentsJoin (20171022235227)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_enrollments_on_section_id_and_student_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_enrollments_on_section_id_and_student_id' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP INDEX "index_enrollments_on_section_id_and_student_id"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "enrollments"[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = ?[0m  [["version", "20171022235227"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_admin_users_on_username' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_admin_users_on_username' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+[0m
+Started GET "/access/menu" for 127.0.0.1 at 2017-10-22 18:21:45 -0600
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AccessController#menu as HTML
+  Rendering access/menu.html.erb within layouts/application
+  Rendered access/menu.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 320ms (Views: 310.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/courses" for 127.0.0.1 at 2017-10-22 18:21:47 -0600
+Processing by CoursesController#index as HTML
+  Rendering courses/index.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  Rendered courses/index.html.erb within layouts/application (13.6ms)
+Completed 200 OK in 67ms (Views: 56.3ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/students" for 127.0.0.1 at 2017-10-22 18:21:49 -0600
+Processing by StudentsController#index as HTML
+  Rendering students/index.html.erb within layouts/application
+  [1m[36mStudent Load (0.3ms)[0m  [1m[34mSELECT "students".* FROM "students"[0m
+  Rendered students/index.html.erb within layouts/application (13.8ms)
+Completed 200 OK in 96ms (Views: 83.0ms | ActiveRecord: 0.9ms)
+
+
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateStudentEnrollments (20171023002225)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "student_enrollments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "student_id" integer, "section_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_student_enrollments_on_student_id_and_section_id" ON "student_enrollments" ("student_id", "section_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20171023002225"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_admin_users_on_username' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_admin_users_on_username' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_professor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sections_on_course_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_student_enrollments_on_student_id_and_section_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_student_enrollments_on_student_id_and_section_id' AND type='index'
+[0m
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT  "sections".* FROM "sections" WHERE "sections"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT  "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudentEnrollment Load (0.1ms)[0m  [1m[34mSELECT  "student_enrollments".* FROM "student_enrollments" WHERE "student_enrollments"."section_id" = ? LIMIT ?[0m  [["section_id", 2], ["LIMIT", 11]]
+  [1m[36mStudentEnrollment Load (0.2ms)[0m  [1m[34mSELECT  "student_enrollments".* FROM "student_enrollments" WHERE "student_enrollments"."student_id" = ? LIMIT ?[0m  [["student_id", 2], ["LIMIT", 11]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "student_enrollments" ("student_id", "section_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 2], ["section_id", 2], ["created_at", "2017-10-23 00:36:41.936851"], ["updated_at", "2017-10-23 00:36:41.936851"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mStudentEnrollment Load (0.2ms)[0m  [1m[34mSELECT  "student_enrollments".* FROM "student_enrollments" WHERE "student_enrollments"."student_id" = ? LIMIT ?[0m  [["student_id", 2], ["LIMIT", 11]]
+  [1m[36mStudentEnrollment Load (0.2ms)[0m  [1m[34mSELECT  "student_enrollments".* FROM "student_enrollments" WHERE "student_enrollments"."section_id" = ? LIMIT ?[0m  [["section_id", 2], ["LIMIT", 11]]
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT  "sections".* FROM "sections" WHERE "sections"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT  "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT  "students".* FROM "students" INNER JOIN "student_enrollments" ON "students"."id" = "student_enrollments"."student_id" WHERE "student_enrollments"."section_id" = ? LIMIT ?[0m  [["section_id", 2], ["LIMIT", 11]]
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT  "sections".* FROM "sections" INNER JOIN "student_enrollments" ON "sections"."id" = "student_enrollments"."section_id" WHERE "student_enrollments"."student_id" = ? LIMIT ?[0m  [["student_id", 2], ["LIMIT", 11]]
+Started GET "/students" for 127.0.0.1 at 2017-10-22 18:47:35 -0600
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by StudentsController#index as HTML
+  Rendering students/index.html.erb within layouts/application
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students"[0m
+  Rendered students/index.html.erb within layouts/application (13.8ms)
+Completed 200 OK in 349ms (Views: 331.8ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/students/new" for 127.0.0.1 at 2017-10-22 18:47:38 -0600
+Processing by StudentsController#new as HTML
+  Rendering students/new.html.erb within layouts/application
+  Rendered students/_form.html.erb (23.5ms)
+  Rendered students/new.html.erb within layouts/application (26.6ms)
+Completed 200 OK in 79ms (Views: 73.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/professors" for 127.0.0.1 at 2017-10-22 18:47:59 -0600
+Processing by ProfessorsController#index as HTML
+  Rendering professors/index.html.erb within layouts/application
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered professors/index.html.erb within layouts/application (9.4ms)
+Completed 200 OK in 86ms (Views: 77.7ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/professors/new" for 127.0.0.1 at 2017-10-22 18:48:01 -0600
+Processing by ProfessorsController#new as HTML
+  Rendering professors/new.html.erb within layouts/application
+  Rendered professors/_form.html.erb (2.5ms)
+  Rendered professors/new.html.erb within layouts/application (5.5ms)
+Completed 200 OK in 78ms (Views: 73.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/sections" for 127.0.0.1 at 2017-10-22 18:48:04 -0600
+Processing by SectionsController#index as HTML
+  Rendering sections/index.html.erb within layouts/application
+  [1m[36mSection Load (0.2ms)[0m  [1m[34mSELECT "sections".* FROM "sections"[0m
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfessor Load (0.1ms)[0m  [1m[34mSELECT  "professors".* FROM "professors" WHERE "professors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered sections/index.html.erb within layouts/application (48.6ms)
+Completed 200 OK in 137ms (Views: 122.0ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/sections/new" for 127.0.0.1 at 2017-10-22 18:48:06 -0600
+Processing by SectionsController#new as HTML
+  Rendering sections/new.html.erb within layouts/application
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mProfessor Load (0.2ms)[0m  [1m[34mSELECT "professors".* FROM "professors"[0m
+  Rendered sections/_form.html.erb (8.4ms)
+  Rendered sections/new.html.erb within layouts/application (11.2ms)
+Completed 200 OK in 70ms (Views: 64.0ms | ActiveRecord: 0.4ms)
+
+
