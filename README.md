@@ -1,1 +1,1 @@
-# cs390P-assign03
+simple rails app (extended)
